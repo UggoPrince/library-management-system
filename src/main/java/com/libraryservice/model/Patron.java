@@ -2,6 +2,7 @@ package com.libraryservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +12,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "patrons")
 public class Patron extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition = "serial")
-    @JsonProperty("id")
-    private Long id;
-
     @JsonProperty("name")
     @Column(name = "name")
     private String name;
@@ -27,6 +22,7 @@ public class Patron extends BaseEntity {
 
     @JsonProperty("email")
     @Column(name = "email", unique = true)
+    @Email(message = "Email should be valid")
     private String email;
 
     @JsonProperty("address")

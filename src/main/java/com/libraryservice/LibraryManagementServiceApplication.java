@@ -1,6 +1,5 @@
 package com.libraryservice;
 
-import com.libraryservice.config.DataSourceConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -10,16 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.libraryservice"})
+@EnableCaching
 public class LibraryManagementServiceApplication {
-	@Autowired
-	private DataSourceConfig dataSourceConfig;
 
 	@Autowired
 	private Environment env;
@@ -27,9 +28,10 @@ public class LibraryManagementServiceApplication {
 	private static final Logger log = LoggerFactory.getLogger(LibraryManagementServiceApplication.class);
 
 	public static void main(String[] args) {
+		// SpringApplication.run(LibraryManagementServiceApplication.class, args);
 		ApplicationContext context = SpringApplication.run(LibraryManagementServiceApplication.class, args);
 		LibraryManagementServiceApplication app = context.getBean(LibraryManagementServiceApplication.class);
-		// app.entityManagerFactory();
+		app.entityManagerFactory();
 
 	}
 
@@ -43,5 +45,4 @@ public class LibraryManagementServiceApplication {
 		EntityManager em = emf.createEntityManager();
 		em.close();
 	}
-
 }

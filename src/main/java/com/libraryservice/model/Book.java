@@ -2,9 +2,11 @@ package com.libraryservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -12,12 +14,6 @@ import java.util.Date;
 @Entity
 @Table(name = "books")
 public class Book extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition = "serial")
-    @JsonProperty("id")
-    private Long id;
-
     @JsonProperty("title")
     @Column(name = "title")
     private String title;
@@ -28,7 +24,7 @@ public class Book extends BaseEntity {
 
     @JsonProperty("publicationYear")
     @Column(name = "publication_year")
-    private Date publicationYear;
+    private LocalDate publicationYear;
 
     @JsonProperty("isbn")
     @Column(name = "isbn")
@@ -37,7 +33,7 @@ public class Book extends BaseEntity {
     public Book() {
     }
 
-    public Book(String title, String author, Date publicationYear, String ISBN) {
+    public Book(String title, String author, LocalDate publicationYear, String ISBN) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
